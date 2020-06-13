@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="nl.donyell.m2mobi.MainFragment"
+        android:name="nl.donyell.m2mobi.presentation.fragment.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="nl.donyell.m2mobi.DetailFragment"
+        android:name="nl.donyell.m2mobi.presentation.fragment.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument

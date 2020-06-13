@@ -6,13 +6,13 @@
 <!--    <data>-->
 <!--        <variable-->
 <!--            name="viewModel"-->
-<!--            type="nl.donyell.m2mobi.viewmodel.main.MainViewModel" />-->
+<!--            type="nl.donyell.m2mobi.presentation.viewmodel.main.MainViewModel" />-->
 <!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainFragment">
+        tools:context=".presentation.fragment.MainFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_photos"

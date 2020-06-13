@@ -1,4 +1,4 @@
-package nl.donyell.m2mobi.adapter.databinding
+package nl.donyell.m2mobi.presentation.adapter.databinding
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

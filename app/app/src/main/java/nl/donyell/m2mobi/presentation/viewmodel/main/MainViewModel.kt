@@ -1,4 +1,4 @@
-package nl.donyell.m2mobi.viewmodel.main
+package nl.donyell.m2mobi.presentation.viewmodel.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -20,6 +20,15 @@ class MainViewModel @Inject constructor(getPhotosUseCase: GetPhotosUseCase) : Vi
     private val compositeDisposable = CompositeDisposable()
 
     init {
+        refreshPhotos(getPhotosUseCase)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
+
+    private fun refreshPhotos(getPhotosUseCase: GetPhotosUseCase) {
         getPhotosUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -30,10 +39,5 @@ class MainViewModel @Inject constructor(getPhotosUseCase: GetPhotosUseCase) : Vi
             }).let {
                 compositeDisposable.add(it)
             }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
     }
 }

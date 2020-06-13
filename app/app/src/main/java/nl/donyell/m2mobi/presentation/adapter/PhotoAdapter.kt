@@ -1,4 +1,4 @@
-package nl.donyell.m2mobi.adapter
+package nl.donyell.m2mobi.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import nl.donyell.m2mobi.MainFragmentDirections
 import nl.donyell.m2mobi.databinding.ListItemPhotoBinding
 import nl.donyell.m2mobi.domain.models.Photo
+import nl.donyell.m2mobi.presentation.fragment.MainFragmentDirections
 
 class PhotoAdapter : ListAdapter<Photo, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
 

@@ -1,4 +1,4 @@
-package nl.donyell.m2mobi
+package nl.donyell.m2mobi.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package nl.donyell.m2mobi
+package nl.donyell.m2mobi.presentation.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import nl.donyell.m2mobi.adapter.PhotoAdapter
+import nl.donyell.m2mobi.M2MobiApp
+import nl.donyell.m2mobi.R
+import nl.donyell.m2mobi.presentation.adapter.PhotoAdapter
 import nl.donyell.m2mobi.databinding.FragmentMainBinding
-import nl.donyell.m2mobi.viewmodel.main.MainViewModel
+import nl.donyell.m2mobi.presentation.viewmodel.main.MainViewModel
 import javax.inject.Inject
 
 class MainFragment : Fragment() {
