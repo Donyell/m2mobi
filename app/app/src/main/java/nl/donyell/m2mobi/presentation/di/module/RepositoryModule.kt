@@ -1,0 +1,18 @@
+package nl.donyell.m2mobi.presentation.di.module
+
+import dagger.Binds
+import dagger.Module
+import nl.donyell.m2mobi.data.repository.DataRepository
+import nl.donyell.m2mobi.data.repository.DataRepositoryImpl
+import nl.donyell.m2mobi.data.repository.cloud.CloudApi
+import nl.donyell.m2mobi.data.repository.cloud.CloudApiImpl
+
+@Module
+abstract class RepositoryModule {
+
+    @Binds
+    abstract fun provideCloudApi(cloudApi: CloudApiImpl): CloudApi
+
+    @Binds
+    abstract fun provideDataRepository(dataRepository: DataRepositoryImpl): DataRepository
+}
