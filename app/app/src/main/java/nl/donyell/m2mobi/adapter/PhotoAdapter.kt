@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import nl.donyell.m2mobi.MainFragmentDirections
 import nl.donyell.m2mobi.databinding.ListItemPhotoBinding
-import nl.donyell.m2mobi.response.GetPhotosResponse
+import nl.donyell.m2mobi.domain.models.Photo
 
-class PhotoAdapter : ListAdapter<GetPhotosResponse, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
+class PhotoAdapter : ListAdapter<Photo, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return PhotoViewHolder(
@@ -36,12 +36,12 @@ class PhotoAdapter : ListAdapter<GetPhotosResponse, RecyclerView.ViewHolder>(Pho
             }
         }
 
-        private fun navigateToPhoto(photo: GetPhotosResponse, view: View) {
+        private fun navigateToPhoto(photo: Photo, view: View) {
             val direction = MainFragmentDirections.actionMainFragmentToDetailFragment(photo.id)
             view.findNavController().navigate(direction)
         }
 
-        fun bind(item: GetPhotosResponse) {
+        fun bind(item: Photo) {
             binding.apply {
                 photo = item
                 executePendingBindings()
@@ -50,15 +50,15 @@ class PhotoAdapter : ListAdapter<GetPhotosResponse, RecyclerView.ViewHolder>(Pho
     }
 }
 
-private class PhotoDiffCallback : DiffUtil.ItemCallback<GetPhotosResponse>() {
+private class PhotoDiffCallback : DiffUtil.ItemCallback<Photo>() {
 
-    override fun areItemsTheSame(oldItem: GetPhotosResponse, newItem: GetPhotosResponse): Boolean {
+    override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
         return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: GetPhotosResponse,
-        newItem: GetPhotosResponse
+        oldItem: Photo,
+        newItem: Photo
     ): Boolean {
         return oldItem == newItem
     }
