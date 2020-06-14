@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import nl.donyell.m2mobi.domain.interactors.GetCommentsUseCase
+import nl.donyell.m2mobi.domain.interactors.usecase.GetCommentsUseCase
 import nl.donyell.m2mobi.domain.interactors.request.GetCommentsRequest
 import nl.donyell.m2mobi.domain.models.Comment
 import javax.inject.Inject

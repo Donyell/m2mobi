@@ -1,8 +1,9 @@
-package nl.donyell.m2mobi.domain.interactors
+package nl.donyell.m2mobi.domain.interactors.usecase
 
 import io.reactivex.Single
 import nl.donyell.m2mobi.domain.interactors.request.GetCommentsRequest
 import nl.donyell.m2mobi.data.repository.DataRepository
+import nl.donyell.m2mobi.domain.interactors.usecase.base.RequestUseCase
 import nl.donyell.m2mobi.domain.models.Comment
 import javax.inject.Inject
 

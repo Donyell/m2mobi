@@ -1,7 +1,8 @@
-package nl.donyell.m2mobi.domain.interactors
+package nl.donyell.m2mobi.domain.interactors.usecase
 
 import io.reactivex.Flowable
 import nl.donyell.m2mobi.data.repository.DataRepository
+import nl.donyell.m2mobi.domain.interactors.usecase.base.FlowableUseCase
 import nl.donyell.m2mobi.domain.models.Photo
 import javax.inject.Inject
 

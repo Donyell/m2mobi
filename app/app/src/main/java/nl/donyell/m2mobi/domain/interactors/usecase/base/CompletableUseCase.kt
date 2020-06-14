@@ -1,4 +1,4 @@
-package nl.donyell.m2mobi.domain.interactors
+package nl.donyell.m2mobi.domain.interactors.usecase.base
 
 import io.reactivex.Completable
 

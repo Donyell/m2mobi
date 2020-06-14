@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import nl.donyell.m2mobi.domain.interactors.GetPhotosUseCase
-import nl.donyell.m2mobi.domain.interactors.RefreshPhotosUseCase
+import nl.donyell.m2mobi.domain.interactors.usecase.GetPhotosUseCase
+import nl.donyell.m2mobi.domain.interactors.usecase.RefreshPhotosUseCase
 import nl.donyell.m2mobi.domain.models.Photo
 import javax.inject.Inject
 
