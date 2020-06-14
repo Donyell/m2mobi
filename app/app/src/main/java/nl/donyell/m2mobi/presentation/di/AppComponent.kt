@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import nl.donyell.m2mobi.presentation.di.module.NetworkModule
 import nl.donyell.m2mobi.presentation.di.module.RepositoryModule
+import nl.donyell.m2mobi.presentation.di.module.StorageModule
 import nl.donyell.m2mobi.presentation.di.module.UseCaseModule
 import nl.donyell.m2mobi.presentation.fragment.DetailFragment
 import nl.donyell.m2mobi.presentation.fragment.MainFragment
@@ -14,6 +15,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         RepositoryModule::class,
+        StorageModule::class,
         UseCaseModule::class,
         NetworkModule::class
     ]

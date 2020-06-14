@@ -1,4 +1,4 @@
-package nl.donyell.m2mobi.data.models.response
+package nl.donyell.m2mobi.data.repository.cloud.models
 
 data class GetCommentsResponse(
     val id: Long,

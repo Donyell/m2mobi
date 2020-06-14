@@ -25,11 +25,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField ("String", "PHOTOS_BASE_URL", '"https://jsonplaceholder.typicode.com/"')
+            buildConfigField("String", "PHOTOS_BASE_URL", '"https://jsonplaceholder.typicode.com/"')
         }
 
         debug {
-            buildConfigField ("String", "PHOTOS_BASE_URL", '"https://jsonplaceholder.typicode.com/"')
+            buildConfigField("String", "PHOTOS_BASE_URL", '"https://jsonplaceholder.typicode.com/"')
         }
     }
 
@@ -66,6 +66,10 @@ dependencies {
 
     implementation 'com.google.dagger:dagger:2.28'
     kapt 'com.google.dagger:dagger-compiler:2.28'
+
+    implementation "androidx.room:room-runtime:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+    implementation "androidx.room:room-rxjava2:2.2.5"
 
     // Testing libraries
     testImplementation 'junit:junit:4.12'

@@ -12,7 +12,8 @@ import nl.donyell.m2mobi.domain.interactors.request.GetCommentsRequest
 import nl.donyell.m2mobi.domain.models.Comment
 import javax.inject.Inject
 
-class DetailViewModel @Inject constructor(private val getCommentsUseCase: GetCommentsUseCase) : ViewModel() {
+class DetailViewModel @Inject constructor(private val getCommentsUseCase: GetCommentsUseCase) :
+    ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -24,26 +25,33 @@ class DetailViewModel @Inject constructor(private val getCommentsUseCase: GetCom
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-     var photoId = MutableLiveData<Long>()
-     var title = MutableLiveData<String>()
-     var imageUrl = MutableLiveData<String>()
+    private var photoId: Long? = null
 
-    fun onAttach(photoId: Long, title: String, imageUrl: String){
-        this.photoId.value = photoId
-        this.title.value = title
-        this.imageUrl.value = imageUrl
+    private var _title = MutableLiveData<String>()
+    val title: LiveData<String>
+        get() = _title
+
+    private var _imageUrl = MutableLiveData<String>()
+    val imageUrl: LiveData<String>
+        get() = _imageUrl
+
+    fun onAttach(photoId: Long, title: String, imageUrl: String) {
+        this.photoId = photoId
+
+        this._title.value = title
+        this._imageUrl.value = imageUrl
 
         refreshComments()
     }
 
-    fun onRefresh(){
+    fun onRefresh() {
         refreshComments()
     }
 
     private fun refreshComments() {
         _isLoading.value = true
 
-        photoId.value?.let { id ->
+        photoId?.let { id ->
             val request = GetCommentsRequest(id)
             getCommentsUseCase.execute(request)
                 .subscribeOn(Schedulers.io())

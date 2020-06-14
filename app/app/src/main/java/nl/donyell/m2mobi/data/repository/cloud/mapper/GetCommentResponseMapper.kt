@@ -1,6 +1,6 @@
-package nl.donyell.m2mobi.data.mapper
+package nl.donyell.m2mobi.data.repository.cloud.mapper
 
-import nl.donyell.m2mobi.data.models.response.GetCommentsResponse
+import nl.donyell.m2mobi.data.repository.cloud.models.GetCommentsResponse
 import nl.donyell.m2mobi.domain.models.Comment
 
 object GetCommentResponseMapper {
