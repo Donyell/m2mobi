@@ -48,13 +48,15 @@ class MainViewModel @Inject constructor(getPhotosUseCase: GetPhotosUseCase) : Vi
                 _photos.value = photos.sortedBy { it.title }
                 _showLoader.value = false
             }, { error ->
-                _showError.value = true
                 _showLoader.value = false
-                error?.let {
-                    Log.e("MainViewModel", error.localizedMessage!!)
-                }
+                handleError(error)
             }).let {
                 compositeDisposable.add(it)
             }
+    }
+
+    private fun handleError(error: Throwable) {
+        _showError.value = true
+        Log.e("MainViewModel", error.localizedMessage!!)
     }
 }
