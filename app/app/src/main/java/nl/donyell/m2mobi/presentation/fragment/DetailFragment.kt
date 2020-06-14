@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import nl.donyell.m2mobi.M2MobiApp
 import nl.donyell.m2mobi.R
 import nl.donyell.m2mobi.databinding.FragmentDetailBinding
@@ -51,6 +52,13 @@ class DetailFragment : Fragment() {
         detailViewModel.comments.observe(viewLifecycleOwner, Observer { comments ->
             adapter.submitList(comments)
         })
+
+        detailViewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+            errorMessage?.let {
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+            }
+        })
+
         return binding.root
     }
 }

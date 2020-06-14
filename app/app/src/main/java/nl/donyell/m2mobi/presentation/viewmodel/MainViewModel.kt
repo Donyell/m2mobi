@@ -10,6 +10,8 @@ import io.reactivex.schedulers.Schedulers
 import nl.donyell.m2mobi.domain.interactors.usecase.GetPhotosUseCase
 import nl.donyell.m2mobi.domain.interactors.usecase.RefreshPhotosUseCase
 import nl.donyell.m2mobi.domain.models.Photo
+import retrofit2.HttpException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -28,10 +30,9 @@ class MainViewModel @Inject constructor(
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    private var _showError = MutableLiveData<Boolean>()
-    val showError: LiveData<Boolean>
-        get() = _showError
-
+    private var _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
 
     init {
         refreshPhotos()
@@ -49,7 +50,7 @@ class MainViewModel @Inject constructor(
 
     private fun refreshPhotos() {
         _isLoading.value = true
-        _showError.value = false
+        _errorMessage.value = null
 
         refreshPhotosUseCase.execute()
             .subscribeOn(Schedulers.io())
@@ -78,7 +79,17 @@ class MainViewModel @Inject constructor(
     }
 
     private fun handleError(error: Throwable) {
-        _showError.value = true
-        Log.e("MainViewModel", error.localizedMessage!!)
+        when (error) {
+            is UnknownHostException -> {
+                _errorMessage.value = "Showing offline results, please check your network connection"
+            }
+            is HttpException -> {
+                _errorMessage.value = error.message()
+            }
+            else -> {
+                _errorMessage.value = "Something went wrong"
+                Log.d("MainViewModel",  error.localizedMessage!!)
+            }
+        }
     }
 }

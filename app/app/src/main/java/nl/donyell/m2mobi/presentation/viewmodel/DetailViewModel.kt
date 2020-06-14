@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import nl.donyell.m2mobi.domain.interactors.usecase.GetCommentsUseCase
 import nl.donyell.m2mobi.domain.interactors.request.GetCommentsRequest
+import nl.donyell.m2mobi.domain.interactors.usecase.GetCommentsUseCase
 import nl.donyell.m2mobi.domain.models.Comment
+import retrofit2.HttpException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class DetailViewModel @Inject constructor(private val getCommentsUseCase: GetCommentsUseCase) :
@@ -35,6 +37,15 @@ class DetailViewModel @Inject constructor(private val getCommentsUseCase: GetCom
     val imageUrl: LiveData<String>
         get() = _imageUrl
 
+    private var _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
+    }
+
     fun onAttach(photoId: Long, title: String, imageUrl: String) {
         this.photoId = photoId
 
@@ -59,17 +70,29 @@ class DetailViewModel @Inject constructor(private val getCommentsUseCase: GetCom
                 .subscribe({ comments ->
                     _comments.value = comments.take(20)
                     _isLoading.value = false
-                }, {
+                }, { error ->
                     _isLoading.value = false
-                    Log.e("DetailViewModel", "Error: $it")
+                    handleError(error)
+
                 }).let {
                     compositeDisposable.add(it)
                 }
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
+    private fun handleError(error: Throwable) {
+        when (error) {
+            is UnknownHostException -> {
+                _errorMessage.value =
+                    "Showing offline results, please check your network connection"
+            }
+            is HttpException -> {
+                _errorMessage.value = error.message()
+            }
+            else -> {
+                _errorMessage.value = "Something went wrong"
+                Log.d("MainViewModel", error.localizedMessage!!)
+            }
+        }
     }
 }

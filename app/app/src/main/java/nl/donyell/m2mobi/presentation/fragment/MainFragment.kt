@@ -44,13 +44,9 @@ class MainFragment : Fragment() {
             adapter.submitList(photos)
         })
 
-        mainViewModel.showError.observe(viewLifecycleOwner, Observer { showErrorMessage ->
-            if (showErrorMessage) {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.general_error_message),
-                    Snackbar.LENGTH_LONG
-                ).show()
+        mainViewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+            errorMessage?.let {
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
             }
         })
 
