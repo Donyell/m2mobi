@@ -20,9 +20,9 @@ class MainViewModel @Inject constructor(private val getPhotosUseCase: GetPhotosU
     val photos: LiveData<List<Photo>>
         get() = _photos
 
-    private var _showLoader = MutableLiveData(false)
-    val showLoader: LiveData<Boolean>
-        get() = _showLoader
+    private var _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
 
     private var _showError = MutableLiveData<Boolean>()
     val showError: LiveData<Boolean>
@@ -43,7 +43,7 @@ class MainViewModel @Inject constructor(private val getPhotosUseCase: GetPhotosU
     }
 
     private fun refreshPhotos(getPhotosUseCase: GetPhotosUseCase) {
-        _showLoader.value = true
+        _isLoading.value = true
         _showError.value = false
 
         getPhotosUseCase.execute()
@@ -51,9 +51,9 @@ class MainViewModel @Inject constructor(private val getPhotosUseCase: GetPhotosU
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ photos ->
                 _photos.value = photos.sortedBy { it.title }
-                _showLoader.value = false
+                _isLoading.value = false
             }, { error ->
-                _showLoader.value = false
+                _isLoading.value = false
                 handleError(error)
             }).let {
                 compositeDisposable.add(it)
