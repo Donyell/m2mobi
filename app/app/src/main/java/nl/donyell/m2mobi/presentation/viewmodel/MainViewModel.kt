@@ -11,7 +11,8 @@ import nl.donyell.m2mobi.domain.interactors.GetPhotosUseCase
 import nl.donyell.m2mobi.domain.models.Photo
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(getPhotosUseCase: GetPhotosUseCase) : ViewModel() {
+class MainViewModel @Inject constructor(private val getPhotosUseCase: GetPhotosUseCase) :
+    ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -35,6 +36,10 @@ class MainViewModel @Inject constructor(getPhotosUseCase: GetPhotosUseCase) : Vi
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    fun onRefresh() {
+        refreshPhotos(getPhotosUseCase)
     }
 
     private fun refreshPhotos(getPhotosUseCase: GetPhotosUseCase) {
