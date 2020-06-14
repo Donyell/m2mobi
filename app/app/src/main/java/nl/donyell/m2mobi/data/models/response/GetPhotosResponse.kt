@@ -1,4 +1,4 @@
-package nl.donyell.m2mobi.data.models
+package nl.donyell.m2mobi.data.models.response
 
 data class GetPhotosResponse(
     val albumId: Long,

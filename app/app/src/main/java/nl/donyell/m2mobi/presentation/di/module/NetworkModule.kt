@@ -9,18 +9,21 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
     @Provides
+    @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         val okHttpBuilder = OkHttpClient.Builder()
-        okHttpBuilder.addInterceptor(HttpLoggingInterceptor())
+        okHttpBuilder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         return okHttpBuilder.build()
     }
 
     @Provides
+    @Singleton
     fun provideJsonPlaceholderApi(okHttpClient: OkHttpClient): JsonPlaceholderApi {
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.PHOTOS_BASE_URL)

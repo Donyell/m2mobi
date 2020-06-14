@@ -13,11 +13,11 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(getPhotosUseCase: GetPhotosUseCase) : ViewModel() {
 
+    private val compositeDisposable = CompositeDisposable()
+
     private var _photos = MutableLiveData<List<Photo>>()
     val photos: LiveData<List<Photo>>
         get() = _photos
-
-    private val compositeDisposable = CompositeDisposable()
 
     init {
         refreshPhotos(getPhotosUseCase)

@@ -7,4 +7,7 @@
 
     <dimen name="text_view_side_margin">8dp</dimen>
     <dimen name="card_view_margin_bottom">16dp</dimen>
+
+    <dimen name="small_padding">8dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
 </resources>

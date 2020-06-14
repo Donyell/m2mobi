@@ -37,7 +37,11 @@ class PhotoAdapter : ListAdapter<Photo, RecyclerView.ViewHolder>(PhotoDiffCallba
         }
 
         private fun navigateToPhoto(photo: Photo, view: View) {
-            val direction = MainFragmentDirections.actionMainFragmentToDetailFragment(photo.id)
+            val direction = MainFragmentDirections.actionMainFragmentToDetailFragment(
+                photo.id,
+                photo.title,
+                photo.imageUrl
+            )
             view.findNavController().navigate(direction)
         }
 

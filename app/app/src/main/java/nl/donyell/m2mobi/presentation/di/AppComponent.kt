@@ -3,12 +3,15 @@ package nl.donyell.m2mobi.presentation.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
-import nl.donyell.m2mobi.presentation.fragment.MainFragment
 import nl.donyell.m2mobi.presentation.di.module.MapperModule
 import nl.donyell.m2mobi.presentation.di.module.NetworkModule
 import nl.donyell.m2mobi.presentation.di.module.RepositoryModule
 import nl.donyell.m2mobi.presentation.di.module.UseCaseModule
+import nl.donyell.m2mobi.presentation.fragment.DetailFragment
+import nl.donyell.m2mobi.presentation.fragment.MainFragment
+import javax.inject.Singleton
 
+@Singleton
 @Component(
     modules = [
         RepositoryModule::class,
@@ -25,4 +28,5 @@ interface AppComponent {
     }
 
     fun inject(mainFragment: MainFragment)
+    fun inject(detailFragment: DetailFragment)
 }
