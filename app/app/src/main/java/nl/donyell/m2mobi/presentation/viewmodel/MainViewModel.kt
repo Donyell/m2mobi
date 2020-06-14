@@ -30,7 +30,7 @@ class MainViewModel @Inject constructor(private val getPhotosUseCase: GetPhotosU
 
 
     init {
-        refreshPhotos(getPhotosUseCase)
+        refreshPhotos()
     }
 
     override fun onCleared() {
@@ -39,10 +39,10 @@ class MainViewModel @Inject constructor(private val getPhotosUseCase: GetPhotosU
     }
 
     fun onRefresh() {
-        refreshPhotos(getPhotosUseCase)
+        refreshPhotos()
     }
 
-    private fun refreshPhotos(getPhotosUseCase: GetPhotosUseCase) {
+    private fun refreshPhotos() {
         _isLoading.value = true
         _showError.value = false
 
