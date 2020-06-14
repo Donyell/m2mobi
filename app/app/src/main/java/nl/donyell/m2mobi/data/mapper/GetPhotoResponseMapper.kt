@@ -3,7 +3,7 @@ package nl.donyell.m2mobi.data.mapper
 import nl.donyell.m2mobi.data.models.response.GetPhotosResponse
 import nl.donyell.m2mobi.domain.models.Photo
 
-class GetPhotoResponseMapper {
+object GetPhotoResponseMapper {
 
     fun toPhoto(photosResponse: GetPhotosResponse): Photo {
         return Photo(
