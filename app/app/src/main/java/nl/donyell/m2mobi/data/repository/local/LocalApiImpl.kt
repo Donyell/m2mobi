@@ -14,7 +14,6 @@ class LocalApiImpl @Inject constructor(private val photoDao: PhotoDao) : LocalAp
             PhotoMapper.toLocalPhoto(it)
         }
         return photoDao.insertAllPhotos(mappedPhotos)
-
     }
 
     override fun getPhotos(): Flowable<List<Photo>> {

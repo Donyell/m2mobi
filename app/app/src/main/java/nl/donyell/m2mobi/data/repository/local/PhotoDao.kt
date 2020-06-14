@@ -10,7 +10,7 @@ import nl.donyell.m2mobi.data.repository.local.models.LocalPhoto
 
 @Dao
 interface PhotoDao {
-    @Query("SELECT * FROM  localphoto")
+    @Query("SELECT * FROM  localphoto ORDER BY title ASC")
     fun getPhotos(): Flowable<List<LocalPhoto>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

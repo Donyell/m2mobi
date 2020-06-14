@@ -69,7 +69,7 @@ class MainViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ photos ->
-                _photos.value = photos.sortedBy { it.title }
+                _photos.value = photos
             }, { error ->
                 handleError(error)
             }).let {
