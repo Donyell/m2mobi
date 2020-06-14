@@ -43,6 +43,7 @@ class DetailFragment : Fragment() {
             inflater, R.layout.fragment_detail, container, false
         )
         binding.viewModel = detailViewModel
+        binding.lifecycleOwner = this
 
         val adapter = CommentAdapter()
         binding.rvComments.adapter = adapter

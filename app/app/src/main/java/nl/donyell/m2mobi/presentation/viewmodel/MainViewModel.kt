@@ -1,4 +1,4 @@
-package nl.donyell.m2mobi.presentation.viewmodel.main
+package nl.donyell.m2mobi.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -19,6 +19,15 @@ class MainViewModel @Inject constructor(getPhotosUseCase: GetPhotosUseCase) : Vi
     val photos: LiveData<List<Photo>>
         get() = _photos
 
+    private var _showLoader = MutableLiveData(false)
+    val showLoader: LiveData<Boolean>
+        get() = _showLoader
+
+    private var _showError = MutableLiveData<Boolean>()
+    val showError: LiveData<Boolean>
+        get() = _showError
+
+
     init {
         refreshPhotos(getPhotosUseCase)
     }
@@ -29,13 +38,21 @@ class MainViewModel @Inject constructor(getPhotosUseCase: GetPhotosUseCase) : Vi
     }
 
     private fun refreshPhotos(getPhotosUseCase: GetPhotosUseCase) {
+        _showLoader.value = true
+        _showError.value = false
+
         getPhotosUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ photos ->
                 _photos.value = photos.sortedBy { it.title }
-            }, {
-                Log.e("MainViewModel", "Error: $it")
+                _showLoader.value = false
+            }, { error ->
+                _showError.value = true
+                _showLoader.value = false
+                error?.let {
+                    Log.e("MainViewModel", error.localizedMessage!!)
+                }
             }).let {
                 compositeDisposable.add(it)
             }
