@@ -10,6 +10,8 @@ import io.reactivex.schedulers.Schedulers
 import nl.donyell.m2mobi.domain.interactors.usecase.GetPhotosUseCase
 import nl.donyell.m2mobi.domain.interactors.usecase.RefreshPhotosUseCase
 import nl.donyell.m2mobi.domain.models.Photo
+import nl.donyell.m2mobi.presentation.navigator.MainNavigationAction
+import nl.donyell.m2mobi.presentation.navigator.MainNavigationAction.OpenDetail
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -17,22 +19,21 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val refreshPhotosUseCase: RefreshPhotosUseCase,
     private val getPhotosUseCase: GetPhotosUseCase
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
     private var _photos = MutableLiveData<List<Photo>>()
-    val photos: LiveData<List<Photo>>
-        get() = _photos
+    val photos: LiveData<List<Photo>> = _photos
 
     private var _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private var _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String>
-        get() = _errorMessage
+    val errorMessage: LiveData<String> = _errorMessage
+
+    private var _navigator = MutableLiveData<MainNavigationAction>()
+    val navigation: LiveData<MainNavigationAction> = _navigator
 
     init {
         refreshPhotos()
@@ -48,13 +49,17 @@ class MainViewModel @Inject constructor(
         refreshPhotos()
     }
 
+    fun onPhotoClicked(photo: Photo) {
+        _navigator.postValue(OpenDetail(photo))
+    }
+
     private fun refreshPhotos() {
-        _isLoading.value = true
         _errorMessage.value = null
 
-        refreshPhotosUseCase.execute()
+        refreshPhotosUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { _isLoading.value = true }
             .subscribe({
                 _isLoading.value = false
             }, { error ->
@@ -66,7 +71,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getPhotos() {
-        getPhotosUseCase.execute()
+        getPhotosUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ photos ->
@@ -81,14 +86,15 @@ class MainViewModel @Inject constructor(
     private fun handleError(error: Throwable) {
         when (error) {
             is UnknownHostException -> {
-                _errorMessage.value = "Showing offline results, please check your network connection"
+                _errorMessage.value =
+                    "Showing offline results, please check your network connection"
             }
             is HttpException -> {
                 _errorMessage.value = error.message()
             }
             else -> {
                 _errorMessage.value = "Something went wrong"
-                Log.d("MainViewModel",  error.localizedMessage!!)
+                Log.d("MainViewModel", error.localizedMessage!!)
             }
         }
     }

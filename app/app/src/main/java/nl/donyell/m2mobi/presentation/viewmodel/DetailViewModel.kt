@@ -14,32 +14,28 @@ import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class DetailViewModel @Inject constructor(private val getCommentsUseCase: GetCommentsUseCase) :
-    ViewModel() {
+class DetailViewModel @Inject constructor(
+    private val getCommentsUseCase: GetCommentsUseCase
+) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
     private var _comments = MutableLiveData<List<Comment>>()
-    val comments: LiveData<List<Comment>>
-        get() = _comments
+    val comments: LiveData<List<Comment>> = _comments
 
     private var _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private var photoId: Long? = null
 
     private var _title = MutableLiveData<String>()
-    val title: LiveData<String>
-        get() = _title
+    val title: LiveData<String> = _title
 
     private var _imageUrl = MutableLiveData<String>()
-    val imageUrl: LiveData<String>
-        get() = _imageUrl
+    val imageUrl: LiveData<String> = _imageUrl
 
     private var _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String>
-        get() = _errorMessage
+    val errorMessage: LiveData<String> = _errorMessage
 
     override fun onCleared() {
         super.onCleared()
@@ -60,15 +56,14 @@ class DetailViewModel @Inject constructor(private val getCommentsUseCase: GetCom
     }
 
     private fun refreshComments() {
-        _isLoading.value = true
-
         photoId?.let { id ->
             val request = GetCommentsRequest(id)
-            getCommentsUseCase.execute(request)
+            getCommentsUseCase(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { _isLoading.value = true }
                 .subscribe({ comments ->
-                    _comments.value = comments.take(20)
+                    _comments.value = comments.sortedBy { it.name }.take(20)
                     _isLoading.value = false
                 }, { error ->
                     _isLoading.value = false
