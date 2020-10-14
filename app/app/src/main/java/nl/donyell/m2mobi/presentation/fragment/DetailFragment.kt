@@ -21,6 +21,10 @@ class DetailFragment : Fragment() {
 
     private val args: DetailFragmentArgs by navArgs()
 
+    private val adapter by lazy {
+        CommentAdapter()
+    }
+
     @Inject
     lateinit var detailViewModel: DetailViewModel
 
@@ -46,19 +50,22 @@ class DetailFragment : Fragment() {
         binding.viewModel = detailViewModel
         binding.lifecycleOwner = this
 
-        val adapter = CommentAdapter()
         binding.rvComments.adapter = adapter
 
-        detailViewModel.comments.observe(viewLifecycleOwner, Observer { comments ->
-            adapter.submitList(comments)
-        })
+        observeViewModel(binding)
+
+        return binding.root
+    }
+
+
+
+    private fun observeViewModel(binding: FragmentDetailBinding) {
+        detailViewModel.comments.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
 
         detailViewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
             errorMessage?.let {
                 Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
             }
         })
-
-        return binding.root
     }
 }
