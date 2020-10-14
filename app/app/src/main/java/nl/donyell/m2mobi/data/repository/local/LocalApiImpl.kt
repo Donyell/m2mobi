@@ -10,19 +10,16 @@ import javax.inject.Inject
 class LocalApiImpl @Inject constructor(private val photoDao: PhotoDao) : LocalApi {
 
     override fun savePhotos(photos: List<Photo>): Completable {
-        val mappedPhotos = photos.map {
-            PhotoMapper.toLocalPhoto(it)
-        }
-        return photoDao.insertAllPhotos(mappedPhotos)
+        val localPhotos = photos.map { PhotoMapper.toLocalPhoto(it) }
+        return photoDao.insertAllPhotos(localPhotos)
     }
 
     override fun getPhotos(): Flowable<List<Photo>> {
         return photoDao.getPhotos()
             .flatMapSingle { photos ->
-               Observable.fromIterable(photos)
-                   .map { photo ->
-                       PhotoMapper.fromLocalPhoto(photo)
-                   }.toList()
+                Observable.fromIterable(photos)
+                    .map { PhotoMapper.fromLocalPhoto(it) }
+                    .toList()
             }
     }
 }
