@@ -5,4 +5,5 @@ data class GetCommentsResponse(
     val postId: Long,
     val name: String,
     val email: String,
-    val body: String)
+    val body: String
+)

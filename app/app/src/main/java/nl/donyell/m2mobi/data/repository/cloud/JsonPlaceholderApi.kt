@@ -8,6 +8,7 @@ import retrofit2.http.Path
 
 
 interface JsonPlaceholderApi {
+
     @GET("photos")
     fun getPhotos(): Single<List<GetPhotosResponse>>
 

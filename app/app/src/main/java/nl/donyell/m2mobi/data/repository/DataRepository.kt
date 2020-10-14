@@ -8,6 +8,7 @@ import nl.donyell.m2mobi.domain.models.Comment
 import nl.donyell.m2mobi.domain.models.Photo
 
 interface DataRepository {
+
     fun refreshPhotos(): Completable
 
     fun getPhotos(): Flowable<List<Photo>>

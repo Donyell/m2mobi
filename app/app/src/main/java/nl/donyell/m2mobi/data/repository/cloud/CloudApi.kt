@@ -6,6 +6,7 @@ import nl.donyell.m2mobi.domain.models.Comment
 import nl.donyell.m2mobi.domain.models.Photo
 
 interface CloudApi {
+
     fun getPhotos(): Single<List<Photo>>
 
     fun getComments(getCommentsRequest: GetCommentsRequest): Single<List<Comment>>
