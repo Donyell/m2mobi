@@ -19,11 +19,11 @@ class CommentAdapter : ListAdapter<Comment, RecyclerView.ViewHolder>(CommentDiff
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val plant = getItem(position)
-        (holder as CommentViewHolder).bind(plant)
+        val comment = getItem(position)
+        (holder as CommentViewHolder).bind(comment)
     }
 
-    class CommentViewHolder(private val binding: ListItemCommentBinding) :
+    inner class CommentViewHolder(private val binding: ListItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Comment) {

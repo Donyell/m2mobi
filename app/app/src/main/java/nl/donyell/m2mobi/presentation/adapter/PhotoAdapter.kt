@@ -13,6 +13,8 @@ import nl.donyell.m2mobi.presentation.fragment.MainFragmentDirections
 
 class PhotoAdapter : ListAdapter<Photo, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
 
+    var onPhotoClick: ((Photo) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return PhotoViewHolder(
             ListItemPhotoBinding.inflate(
@@ -26,23 +28,12 @@ class PhotoAdapter : ListAdapter<Photo, RecyclerView.ViewHolder>(PhotoDiffCallba
         (holder as PhotoViewHolder).bind(plant)
     }
 
-    class PhotoViewHolder(private val binding: ListItemPhotoBinding) :
+    inner class PhotoViewHolder(private val binding: ListItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.setClickListener {
-                binding.photo?.let { photo ->
-                    navigateToPhoto(photo, it)
-                }
+                binding.photo?.let { photo -> onPhotoClick?.invoke(photo) }
             }
-        }
-
-        private fun navigateToPhoto(photo: Photo, view: View) {
-            val direction = MainFragmentDirections.actionMainFragmentToDetailFragment(
-                photo.id,
-                photo.title,
-                photo.imageUrl
-            )
-            view.findNavController().navigate(direction)
         }
 
         fun bind(item: Photo) {
